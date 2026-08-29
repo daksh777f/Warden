@@ -200,3 +200,34 @@ sequenceDiagram
 
 ### 1. The Inviolable Safety Guarantee
 > **The LLM agent has literally zero payment tools in its execution belt.**
+
+The agent's tool catalog is strictly limited to:
+- `searchVendors` (Catalog lookup)
+- `fetchPricing` (Matrix extraction)
+- `checkMerchantTrust` (Senso + local heuristic blending)
+- `compareOptions` (Normalization & comparison)
+- `createRecommendation` (Synthesis)
+- `suggestOptimization` (Upsell calculus)
+
+There is **no function that charges money**. Money moves exclusively when:
+1. A human clicks **Approve** in the browser, triggering `POST /api/approvals/[id]`.
+2. The **Deterministic Policy Engine** evaluates the purchase against pre-configured company rules and auto-allows it within cryptographic caps.
+
+### 2. Deterministic Policy Engine (Code, Not Prompts)
+Unlike naive agent wrappers that instruct the LLM: *"Please do not spend more than $100"*, Warden implements spending governance in pure, deterministic TypeScript code:
+- **`maxPerPurchase`**: Hard ceiling on any individual charge.
+- **`dailyCap`**: Real-time spend velocity calculation tracking 24-hour authorized volume.
+- **`autoApprovalLimit`**: Low-risk threshold enabling true autonomous execution without nagging humans.
+- **`priceDriftThreshold` (5%)**: Compares the quoted rate against live catalog prices. If a vendor raises prices between proposal and checkout, Warden flags the drift and halts execution.
+- **`active` Safety Switch**: Instant one-click global kill-switch that escalates 100% of purchases to human review.
+
+### 3. Machine-to-Machine Autonomous Commerce (Phase 4)
+Warden exposes its entire vendor ecosystem to external, third-party AI agents via a self-describing JSON Schema API (`GET /api/agent-catalog`). 
+- **Cryptographic Quotes**: External agents request signed quotes (`POST /api/agent-catalog/quote`) bound by timestamp and HMAC-SHA256 signatures.
+- **Anti-Tampering Verification**: If an external agent modifies the quote (e.g. altering `$55` to `$5`), Warden's cryptographic verifier rejects the payload with `401 Unauthorized` in **under 0.5 milliseconds**.
+- **Autonomous S2S Settlement**: Permitted purchases settle directly server-to-server via Razorpay without browser checkout.
+
+### 4. Honest Mathematical Upsells (Phase 5)
+Upselling in Warden is grounded in strict numeric logic, never vague marketing fluff. When an agent recommends a tool, `suggestOptimization` evaluates exactly two paths:
+- **Annual Discount Optimization**: Calculates exact monthly savings, annual savings, and breakeven horizon (e.g., *"$4/mo cheaper on annual billing, saves $48/yr, breakeven at 10 months"*).
+- **Feature-Tier Upgrade**: Scans customer requirements against catalog tier feature matrices (e.g., *"+$9/user/mo unlocks Audit Logs and Org-wide policy management"*).
