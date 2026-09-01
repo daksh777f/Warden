@@ -258,3 +258,34 @@ Tested on local and production environments across deterministic and LLM workflo
 
 ## Dual Reasoning Models & Trust Engine
 
+```
+                                  ┌───────────────────────────────┐
+                                  │   User Procurement Request    │
+                                  └──────────────┬────────────────┘
+                                                 │
+                        ┌────────────────────────┴────────────────────────┐
+                        ▼                                                 ▼
+          ┌───────────────────────────┐                     ┌───────────────────────────┐
+          │  OpenAI Responses Engine  │                     │ Deterministic Engine      │
+          │  • Model: GPT-4o (or custom)│                   │ • Zero-key offline mode   │
+          │  • Function calling SSE   │                     │ • Heuristic ranking prior │
+          │  • Natural language synthesis│                  │ • Latency < 2.5s          │
+          └─────────────┬─────────────┘                     └─────────────┬─────────────┘
+                        │                                                 │
+                        └────────────────────────┬────────────────────────┘
+                                                 ▼
+                                  ┌───────────────────────────────┐
+                                  │   Merchant Trust Verification │
+                                  └──────────────┬────────────────┘
+                                                 │
+                        ┌────────────────────────┴────────────────────────┐
+                        ▼                                                 ▼
+          ┌───────────────────────────┐                     ┌───────────────────────────┐
+          │  Senso API Verification   │                     │  Local Signal Model       │
+          │  • Real-time merchant check│                    │  • Years operating        │
+          │  • Blended 50% weighting  │                     │  • SOC2/ISO certifications│
+          │  • Resilience to API flakes│                    │  • Sentiment & incidents  │
+          └───────────────────────────┘                     └───────────────────────────┘
+```
+
+Warden implements a dual-engine architecture:
