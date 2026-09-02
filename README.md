@@ -289,3 +289,35 @@ Tested on local and production environments across deterministic and LLM workflo
 ```
 
 Warden implements a dual-engine architecture:
+1. **OpenAI Responses Engine (`lib/agent/openai.ts`)**: Used when `OPENAI_API_KEY` is present. Employs direct HTTP streaming over Server-Sent Events (SSE) with structured tool execution.
+2. **Deterministic Scripted Engine (`lib/agent/scripted.ts`)**: Operates offline without API keys. Uses pre-computed heuristics to guarantee high-velocity evaluations and complete resilience against external AI downtime.
+
+### Blended Trust Scoring
+Merchant trust checks do not rely entirely on a third-party black box. `checkMerchantTrust` queries **Senso** when configured and blends its score 50/50 with Warden's internal heuristic model. This guarantees that a single API timeout or anomalous sentiment score cannot derail a mission-critical purchase recommendation.
+
+---
+
+## Real-World Use Cases
+
+### 1. Autonomous Team Procurement
+- **Scenario**: A senior engineer asks: *"Find an error monitoring tool for our Next.js app under $30/mo"*.
+- **Warden Action**: Evaluates Sentry vs Bugsnag, verifies merchant certifications, recommends Sentry Team ($26/mo), checks the company mandate, and either completes the purchase autonomously or serves an instant Approval Card.
+
+### 2. SaaS Spend Drift & Renewal Guard
+- **Scenario**: A company approved an introductory tier at $15/month. Six months later, the vendor renews at $22/month.
+- **Warden Action**: Detects a +46.6% price drift against the recorded mandate baseline. Automatically halts the automated renewal, files a drift alert in the audit ledger, and requests human confirmation before allowing a charge.
+
+### 3. Machine-to-Machine AI Workforces
+- **Scenario**: An autonomous DevOps agent requires additional transactional email capacity during a marketing surge.
+- **Warden Action**: The external agent calls `GET /api/agent-catalog`, requests a cryptographic quote for Resend Pro, and submits it to `POST /api/agent-catalog/purchase`. Because the $20 price is below the external agent $25 daily cap, the transaction is approved, settled via Razorpay, and logged in real-time.
+
+---
+
+## Complete Tech Stack
+
+| Component | Technology | Version | Purpose |
+|:---|:---|:---:|:---|
+| **Framework** | [Next.js](https://nextjs.org/) | `15.5.22` | App Router, Server Actions, Dynamic Streaming |
+| **UI Library** | [React](https://react.dev/) | `19.1.0` | React Server Components & concurrent rendering |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) | `5.7.0` | Strict type safety across all schemas & models |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) | `v4.1.13` | Modern CSS-first design system with rich tokens |
