@@ -139,3 +139,39 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     });
   } catch (error) {
     // Leave the approval pending so the founder can retry the payment
+    // without the agent having to redo the research.
+    return Response.json(
+      {
+        error:
+          error instanceof Error ? error.message : 'Could not create a Razorpay order.',
+      },
+      { status: 502 },
+    );
+  }
+
+  const updated =
+    (await decideApproval(id, 'approved', approvedBy)) ?? {
+      ...approval,
+      status: 'approved' as const,
+      approved_by: approvedBy,
+      decided_at: new Date().toISOString(),
+    };
+
+  return Response.json({
+    approval: updated,
+    order,
+    session: {
+      order_id: order.id,
+      session_id: order.id,
+      session_token: order.id,
+      iframe_url: '',
+      expires_at: new Date(Date.now() + 15 * 60_000).toISOString(),
+      amount: order.amount,
+      currency: order.currency,
+      simulated: order.simulated,
+      key_id: razorpayKeyId(),
+    },
+    mode: razorpayMode(),
+    publishableKey: razorpayKeyId(),
+  });
+}

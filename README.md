@@ -321,3 +321,30 @@ Merchant trust checks do not rely entirely on a third-party black box. `checkMer
 | **UI Library** | [React](https://react.dev/) | `19.1.0` | React Server Components & concurrent rendering |
 | **Language** | [TypeScript](https://www.typescriptlang.org/) | `5.7.0` | Strict type safety across all schemas & models |
 | **Styling** | [Tailwind CSS](https://tailwindcss.com/) | `v4.1.13` | Modern CSS-first design system with rich tokens |
+| **Payments** | [Razorpay](https://razorpay.com/) | `v2.9.8` | Test-mode Orders API, Checkout.js, and Webhooks |
+| **AI Reasoning**| [OpenAI](https://openai.com/) | `gpt-4.1 / gpt-4o` | Responses API function calling via raw HTTP SSE |
+| **Database** | [Supabase](https://supabase.com/) | `v2.45.0` | PostgreSQL persistence for purchases & audit trail |
+| **Fallback DB** | Node.js File Driver | Native | Serialized atomic disk persistence in `.data/` |
+| **Trust Model** | [Senso](https://senso.ai) | REST API | Live merchant reputation & risk telemetry |
+| **SMS Gateway** | [Linq](https://linqapp.com) | REST API | Out-of-band iMessage/SMS notification system |
+
+---
+
+## Quickstart & Local Execution
+
+### 1. Installation
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/iamda/warden.git
+cd warden
+npm install
+```
+
+### 2. Launch Zero-Config Demo Mode
+Warden runs out of the box with **zero required API keys**. In demo mode, it automatically initializes with the file-backed store, deterministic scripted agent, and Razorpay test sandbox:
+
+```bash
+npm run dev
+```
+
