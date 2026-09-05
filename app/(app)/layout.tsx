@@ -61,7 +61,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <MobileNav />
         <div className="min-w-0 flex-1">{children}</div>
         <footer className="border-t border-ink/10 px-6 py-4 text-center text-xs text-ink-3">
-          Warden · Built by Daksh Goel
+          Warden · Built by <a href="https://github.com/daksh777f" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline underline-offset-2">Daksh Goel</a>
         </footer>
       </div>
     </div>

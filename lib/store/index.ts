@@ -527,5 +527,4 @@ export async function getTodayAgentAuthorizedSpend(): Promise<number> {
     .reduce((sum, p) => sum + p.price, 0);
 }
 
-// Production store initialization hook
-export const STORE_READY = true;
+

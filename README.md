@@ -4,7 +4,7 @@
 
 **Bounded, gated, autonomous commerce for AI agents.**
 
-*Designed & Engineered by **[Daksh Goel](https://github.com/)***
+*Designed & Engineered by **[Daksh Goel](https://github.com/daksh777f)***
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.5-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.1-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
@@ -336,8 +336,8 @@ Merchant trust checks do not rely entirely on a third-party black box. `checkMer
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/iamda/warden.git
-cd warden
+git clone https://github.com/daksh777f/Warden.git
+cd Warden
 npm install
 ```
 
@@ -348,3 +348,102 @@ Warden runs out of the box with **zero required API keys**. In demo mode, it aut
 npm run dev
 ```
 
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### 3. Live Demo Scenarios
+Experience Warden's core workflows directly in the web app:
+1. **Normal Procurement**: Ask for *"Find an error monitoring tool under $30/mo"* (Sentry Team via Razorpay Checkout).
+2. **Policy Denial**: Ask for *"Buy Datadog Pro at $450/mo"* (Hard blocked by $100 spending mandate).
+3. **Price Drift Re-approval**: Quoted rate differs from catalog baseline (Requires price drift confirmation).
+4. **Payment Failure & 1-Click Recovery**: Test webhook decline & retry with zero duplicate charges.
+5. **External Autonomous Agent Purchase**: Machine-to-Machine S2S transaction via `/api/agent-catalog`.
+6. **Honest Upsell Suggestion**: Suggests optimizations only when mathematically advantageous (e.g. annual ROI).
+7. **Live Governance Dashboard & Cryptographic Audit Trail**: View real-time telemetry and immutable audit logs.
+
+### 4. Run the Standalone Autonomous Agent Simulation
+Demonstrate external AI agent procurement via terminal:
+
+```bash
+npx tsx scripts/simulate-external-agent.ts
+```
+
+This runs an external agent script that imports *zero code from Warden* and interacts exclusively over HTTP endpoints, demonstrating discovery, authorized buying, gating denial, and anti-tampering rejection.
+
+---
+
+## Configuration & Environment Variables
+
+Copy `.env.example` to `.env.local` to light up optional external integrations:
+
+```bash
+cp .env.example .env.local
+```
+
+| Environment Variable | Description | Default / Fallback |
+|:---|:---|:---|
+| `OPENAI_API_KEY` | Activates live GPT-4o multi-turn reasoning | Falls back to Deterministic Scripted Agent |
+| `OPENAI_MODEL` | Specific OpenAI model ID | `gpt-4.1` |
+| `RAZORPAY_KEY_ID` | Razorpay Key ID (`rzp_test_...`) | Simulated sandbox |
+| `RAZORPAY_KEY_SECRET` | Razorpay Key Secret | Simulated sandbox |
+| `RAZORPAY_WEBHOOK_SECRET` | HMAC secret for verifying incoming webhooks | `parch_rzp_mock_secret` |
+| `SENSO_API_KEY` | Live merchant risk verification | Local 50/50 heuristic trust model |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase Postgres database URL | Local file database (`.data/parch.json`) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service key for persistence | Local file database |
+| `APPROVAL_SIGNING_SECRET` | HMAC secret for approval cryptographic proofs | Built-in fallback secret |
+| `DEMO_COMPANY_NAME` | Default tenant company name | `Acme Inc.` |
+| `DEMO_USER_EMAIL` | Default purchaser identity | `founder@acme.dev` |
+
+---
+
+## Project Structure
+
+```
+├── app/
+│   ├── (app)/                       # Core Application Shell
+│   │   ├── audit/page.tsx           # Cryptographic Audit Trail Ledger
+│   │   ├── chat/page.tsx            # AI Procurement Chat Interface
+│   │   ├── dashboard/page.tsx       # Live Governance Metrics & Telemetry
+│   │   ├── purchases/page.tsx       # Captured Purchases & Subscriptions
+│   │   ├── renewals/page.tsx        # Upcoming Renewals & Cancellation
+│   │   ├── settings/page.tsx        # Spending Mandate & Failure Simulation
+│   │   └── layout.tsx               # Shared Shell with Universal Developer Credit
+│   ├── api/                         # Backend API Endpoints
+│   │   ├── agent-catalog/           # M2M Discovery Schema & S2S Endpoints
+│   │   ├── approvals/               # Human Approval Gate & Razorpay Orders
+│   │   ├── chat/                    # SSE Streaming Agent Dispatcher
+│   │   ├── invoices/[id]/           # Printable HTML Invoice Generator
+│   │   └── razorpay/                # Verify, Webhook, and Failure Simulator
+│   ├── layout.tsx                   # Root HTML Layout & Global Metadata
+│   └── page.tsx                     # Landing Page & Feature Overview
+├── components/                      # UI Component Library
+│   ├── audit/                       # Timeline Cards, Status Filters, Traces
+│   ├── chat/                        # Tool Cards, Recommendations, Checkout Modal
+│   ├── dashboard/                   # Governance Panel, Live Stat Blocks
+│   ├── settings/                    # Mandate Sliders, Reset & Failure Buttons
+│   └── ui/                          # Design System Primitives (Cards, Badges)
+├── lib/                             # Core Domain & Infrastructure Libraries
+│   ├── agent/                       # OpenAI Streamer & Deterministic Fallback
+│   ├── agent-catalog/               # Cryptographic Quote Signing (HMAC-SHA256)
+│   ├── approvals/                   # Proof Verification & Signing Engine
+│   ├── catalog/                     # 23-Vendor Standardized Pricing Matrix
+│   ├── policy/                      # Deterministic Spending Mandate Engine
+│   ├── razorpay/                    # Razorpay Orders API & Webhook Verifier
+│   └── store/                       # Unified Storage Interface (Supabase + File)
+└── scripts/
+    └── simulate-external-agent.ts   # Standalone External Buyer Agent Demo
+```
+
+---
+
+## Author
+
+**[Daksh Goel](https://github.com/daksh777f)**  
+*Creator and Lead Architect of Warden*
+
+---
+
+<div align="center">
+
+**Warden — Bounded, gated, autonomous commerce.**
+
+</div>
