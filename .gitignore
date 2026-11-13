@@ -14,3 +14,20 @@ npm-debug.log*
 scratch/
 DEMO_SCRIPT.md
 DEMO_VOICEOVER_SCRIPT.md
+
+# Secrets
+.env.*
+!.env.example
+*.key
+
+# OS / editor
+Thumbs.db
+.idea/
+
+# Logs
+*.log
+
+# Node
+dist/
+.vercel/
+yarn-error.log*
